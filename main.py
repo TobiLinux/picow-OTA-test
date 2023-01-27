@@ -1,1 +1,5 @@
-print("yes")
+import time
+
+while True:
+  print("yes")
+  time.sleep(1)
