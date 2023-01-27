@@ -2,4 +2,4 @@ import time
 
 while True:
   print("yes")
-  time.sleep(1)
+  time.sleep(2)
