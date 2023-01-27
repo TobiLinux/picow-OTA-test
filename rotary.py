@@ -1,5 +1,5 @@
-# MIT License (MIT)
-# Copyright (c) 2022 Mike Teachman
+# The MIT License (MIT)
+# Copyright (c) 2020 Mike Teachman
 # https://opensource.org/licenses/MIT
 
 # Platform-independent MicroPython code for the rotary encoder module
@@ -42,9 +42,7 @@ _transition_table_half_step = [
     [_R_CW_3 | _DIR_CW,  _R_CW_2,  _R_START, _R_START],
     [_R_CW_3,            _R_CCW_2, _R_CCW_1, _R_START],
     [_R_CW_3,            _R_CW_2,  _R_CCW_1, _R_START | _DIR_CW],
-    [_R_CW_3,            _R_CCW_2, _R_CW_3,  _R_START | _DIR_CCW],
-    [_R_START,           _R_START, _R_START, _R_START],
-    [_R_START,           _R_START, _R_START, _R_START]]
+    [_R_CW_3,            _R_CCW_2, _R_CW_3,  _R_START | _DIR_CCW]]
 
 _STATE_MASK = const(0x07)
 _DIR_MASK = const(0x30)
@@ -75,19 +73,17 @@ class Rotary(object):
     RANGE_WRAP = const(2)
     RANGE_BOUNDED = const(3)
 
-    def __init__(self, min_val, max_val, incr, reverse, range_mode, half_step, invert):
+    def __init__(self, min_val, max_val, reverse, range_mode, half_step):
         self._min_val = min_val
         self._max_val = max_val
-        self._incr = incr
         self._reverse = -1 if reverse else 1
         self._range_mode = range_mode
         self._value = min_val
         self._state = _R_START
         self._half_step = half_step
-        self._invert = invert
         self._listener = []
 
-    def set(self, value=None, min_val=None, incr=None,
+    def set(self, value=None, min_val=None,
             max_val=None, reverse=None, range_mode=None):
         # disable DT and CLK pin interrupts
         self._hal_disable_irq()
@@ -98,8 +94,6 @@ class Rotary(object):
             self._min_val = min_val
         if max_val is not None:
             self._max_val = max_val
-        if incr is not None:
-            self._incr = incr
         if reverse is not None:
             self._reverse = -1 if reverse else 1
         if range_mode is not None:
@@ -130,10 +124,6 @@ class Rotary(object):
         old_value = self._value
         clk_dt_pins = (self._hal_get_clk_value() <<
                        1) | self._hal_get_dt_value()
-                       
-        if self._invert:
-            clk_dt_pins = ~clk_dt_pins & 0x03
-            
         # Determine next state
         if self._half_step:
             self._state = _transition_table_half_step[self._state &
@@ -145,9 +135,9 @@ class Rotary(object):
 
         incr = 0
         if direction == _DIR_CW:
-            incr = self._incr
+            incr = 1
         elif direction == _DIR_CCW:
-            incr = -self._incr
+            incr = -1
 
         incr *= self._reverse
 
@@ -168,6 +158,7 @@ class Rotary(object):
 
         try:
             if old_value != self._value and len(self._listener) != 0:
-                _trigger(self)
+                micropython.schedule(_trigger, self)
         except:
             pass
+
