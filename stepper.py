@@ -5,23 +5,24 @@ pinEnabled = Pin(13, Pin.OUT,value=0)
 pinStep = Pin(14, Pin.OUT)
 pinDirection = Pin(15, Pin.OUT)
 
-stepsPerRevolution = 51
-stepIntervalMs = 5 
-numCiclos = 4
+stepsPerRevolution = 48
+stepIntervalMs = 2
+numCiclos = 2
+numVueltas = 2
 for i in range(numCiclos):
 
     pinDirection.on()
 
-    for i in range(0,stepsPerRevolution):
+    for i in range(0,stepsPerRevolution * numVueltas):
         pinStep.on()
         time.sleep_ms(stepIntervalMs)
         pinStep.off()
         time.sleep_ms(stepIntervalMs)
 
     pinDirection.off()
-    time.sleep(2)
+    time.sleep(0.5)
 
-    for i in range(0,stepsPerRevolution):
+    for i in range(0,stepsPerRevolution * numVueltas):
         pinStep.on()
         time.sleep_ms(stepIntervalMs)
         pinStep.off()
