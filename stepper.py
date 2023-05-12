@@ -7,7 +7,7 @@ pinDirection = Pin(15, Pin.OUT)
 
 stepsPerRevolution = 51
 stepIntervalMs = 5 
-numCiclos = 2
+numCiclos = 4
 for i in range(numCiclos):
 
     pinDirection.on()
@@ -19,6 +19,7 @@ for i in range(numCiclos):
         time.sleep_ms(stepIntervalMs)
 
     pinDirection.off()
+    time.sleep(2)
 
     for i in range(0,stepsPerRevolution):
         pinStep.on()
@@ -27,4 +28,4 @@ for i in range(numCiclos):
         time.sleep_ms(stepIntervalMs)
     time.sleep(2)
 
-pinEnabled.off()
+pinEnabled.on()
