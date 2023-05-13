@@ -9,24 +9,26 @@ stepsPerRevolution = 48
 stepIntervalMs = 2
 numCiclos = 2
 numVueltas = 2
-for i in range(numCiclos):
 
-    pinDirection.on()
+def steperRun():  
+    for i in range(numCiclos):
 
-    for i in range(0,stepsPerRevolution * numVueltas):
-        pinStep.on()
-        time.sleep_ms(stepIntervalMs)
-        pinStep.off()
-        time.sleep_ms(stepIntervalMs)
+        pinDirection.on()
 
-    pinDirection.off()
-    time.sleep(0.5)
+        for i in range(0,stepsPerRevolution * numVueltas):
+            pinStep.on()
+            time.sleep_ms(stepIntervalMs)
+            pinStep.off()
+            time.sleep_ms(stepIntervalMs)
 
-    for i in range(0,stepsPerRevolution * numVueltas):
-        pinStep.on()
-        time.sleep_ms(stepIntervalMs)
-        pinStep.off()
-        time.sleep_ms(stepIntervalMs)
-    time.sleep(2)
+        pinDirection.off()
+        time.sleep(0.5)
 
-pinEnabled.on()
+        for i in range(0,stepsPerRevolution * numVueltas):
+            pinStep.on()
+            time.sleep_ms(stepIntervalMs)
+            pinStep.off()
+            time.sleep_ms(stepIntervalMs)
+        time.sleep(2)
+
+    pinEnabled.on()
