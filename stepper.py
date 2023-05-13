@@ -5,7 +5,7 @@ pinEnabled = Pin(13, Pin.OUT)
 pinStep = Pin(14, Pin.OUT)
 pinDirection = Pin(15, Pin.OUT)
 
-def steperRun(stepsPerRevolution = 48, stepIntervalMs = 2, numCiclos = 2, numVueltas = 2 ):  
+def stepperRun(stepsPerRevolution = 48, stepIntervalMs = 2, numCiclos = 2, numVueltas = 2 ):  
     for i in range(numCiclos):
         pinEnabled.off()
         pinDirection.on()
