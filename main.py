@@ -41,15 +41,15 @@ lcd.putstr('Sp:   | Cont:  ')
 edicion = False
 
 lcd.move_to(0,1)
-lcd.putstr('miau')
-time.sleep(10)
+lcd.putstr('Miau')
+
 
 while True:
     val_new = r.value()
     if (time.ticks_ms() - ms_now >= intervalo_counter) and (not edicion):
-        lcd.move_to(14,0 )
+        lcd.move_to(6,1 )
         lcd.putstr('  ')
-        lcd.move_to(14,0 )
+        lcd.move_to(6,1 )
         print(str(counter))
         lcd.putstr(str(counter))
         counter = counter-1
