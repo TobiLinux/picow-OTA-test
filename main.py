@@ -40,6 +40,9 @@ lcd.clear()
 lcd.putstr('Sp:   | Cont:  ')
 edicion = False
 
+lcd.putstr('miau')
+time.sleep(10)
+
 while True:
     val_new = r.value()
     if (time.ticks_ms() - ms_now >= intervalo_counter) and (not edicion):
