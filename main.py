@@ -17,14 +17,18 @@ r = RotaryIRQ(pin_num_clk=18,
               reverse=True,
               range_mode=RotaryIRQ.RANGE_WRAP)
 
-led = Pin(25, Pin.OUT, value=0)
+led = Pin(19, Pin.OUT, value=0)
 b1 = Pin(7, Pin.IN, Pin.PULL_UP)
 b2 = Pin(14, Pin.IN, Pin.PULL_UP)
 b3 = Pin(16, Pin.IN, Pin.PULL_UP)
 
 def led_parpadeo():
     led.on()
-    time.sleep_ms(5)
+    time.sleep_ms(100)
+    led.off()
+    time.sleep_ms(100)
+    led.on()
+    time.sleep_ms(100)
     led.off()
 
 val_old = r.value()
@@ -55,6 +59,7 @@ while True:
         counter = counter-1
         if counter < 0:
             counter = 10
+            led_parpadeo()
         ms_now = time.ticks_ms()
         
     if val_old != val_new:
