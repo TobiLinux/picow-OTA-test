@@ -40,7 +40,7 @@ lcd.clear()
 lcd.putstr('Sp:   | Cont:  ')
 edicion = False
 
-lcd.move_to(1,0)
+lcd.move_to(0,1)
 lcd.putstr('miau')
 time.sleep(10)
 
