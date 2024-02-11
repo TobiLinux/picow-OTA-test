@@ -24,11 +24,11 @@ b3 = Pin(16, Pin.IN, Pin.PULL_UP)
 
 def led_parpadeo():
     led.on()
-    time.sleep_ms(100)
+    time.sleep_ms(500)
     led.off()
-    time.sleep_ms(100)
+    time.sleep_ms(500)
     led.on()
-    time.sleep_ms(100)
+    time.sleep_ms(500)
     led.off()
 
 val_old = r.value()
